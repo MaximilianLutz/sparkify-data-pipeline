@@ -30,20 +30,6 @@ dag = DAG(
 
 start_operator = DummyOperator(task_id='Begin_execution', dag=dag)
 
-create_tables_task = PostgresOperator(
-    task_id='Create_tables',
-    dag=dag,
-    postgres_conn_id='redshift',
-    sql=[
-        SqlQueries.staging_events_table_create,
-        SqlQueries.staging_songs_table_create,
-        SqlQueries.songplay_table_create,
-        SqlQueries.user_table_create,
-        SqlQueries.song_table_create,
-        SqlQueries.artist_table_create,
-        SqlQueries.time_table_create
-    ]
-)
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
